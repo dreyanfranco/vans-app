@@ -21,7 +21,11 @@ const vanSchema = new Schema(
         },
         type: {
             type: String,
-        }
+        },
+        host: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
     },
     {
         timestamps: true
