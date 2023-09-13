@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import avatar from '../../assets/avatar-icon.png';
 import { AuthContext } from '../../context/auth.context';
-import './styles.css';
 
 const Header = () => {
     const { user } = useContext(AuthContext)
