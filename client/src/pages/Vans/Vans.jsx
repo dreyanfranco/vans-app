@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 import { getVans } from '../../services/vans.service';
 import './styles.css';
 
+
 const Vans = () => {
-  const [vanData, setVandata] = useState([]);
+  const [vanData, setVanData] = useState([]);
+  const { user } = useContext(AuthContext)
 
   useEffect(() => {
     getVans()
-      .then(({ data }) => setVandata(data))
+      .then(({ data }) => {
+        const userVans = data.filter(van => van.owner === user._id)
+        setVanData(userVans)
+      })
       .catch(error => console.log(error))
-  }, [])
+  }, [user])
 
   return (
     <div className='van-list-container'>

@@ -13,7 +13,7 @@ const vanSchema = new Schema(
         description: {
             type: String,
             required: [true, 'Description is required'],
-            minlength: [20, 'Description has got to have at least 20 characters']
+            minlength: [5, 'Description has got to have at least 5 characters']
         },
         imageUrl: {
             type: String,
@@ -22,7 +22,7 @@ const vanSchema = new Schema(
         type: {
             type: String,
         },
-        host: {
+        owner: {
             type: Schema.Types.ObjectId,
             ref: 'User'
         },

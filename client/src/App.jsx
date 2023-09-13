@@ -1,15 +1,18 @@
-import { Route, Routes, Link } from 'react-router-dom';
-import Home from './pages/Home/Home';
+import { Link, Route, Routes } from 'react-router-dom';
+import HostLayout from './components/HostLayout/HostLayout';
+import Layout from './components/Layout';
 import About from './pages/About/About';
-import Vans from './pages/Vans/Vans';
-import VanDetail from './pages/VanDetail/VanDetail';
+import Home from './pages/Home/Home';
 import Dashboard from './pages/Host/Dashboard';
+import HostVanDetail from './pages/Host/HostVanDetail';
+import HostVans from './pages/Host/HostVans';
 import Income from './pages/Host/Income';
 import Reviews from './pages/Host/Reviews';
-import Layout from './components/Layout';
-import HostLayout from './components/HostLayout/HostLayout';
-import HostVans from './pages/Host/HostVans';
-import HostVanDetail from './pages/Host/HostVanDetail';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import VanDetail from './pages/VanDetail/VanDetail';
+import VanForm from './pages/VanForm/VanForm';
+import Vans from './pages/Vans/Vans';
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="vans" element={<Vans />} />
           <Route path="vans/:van_id" element={<VanDetail />} />
 
@@ -27,6 +32,7 @@ function App() {
             <Route path="reviews" element={<Reviews />} />
             <Route path="vans" element={<HostVans />} />
             <Route path="vans/:van_id" element={<HostVanDetail />} />
+            <Route path="new-van" element={<VanForm />} />
           </Route>
         </Route>
       </Routes>

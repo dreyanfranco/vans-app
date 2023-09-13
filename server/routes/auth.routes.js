@@ -1,16 +1,14 @@
 const router = require("express").Router()
 const User = require("../models/User.model")
 
-// const bcrypt = require('bcryptjs')
-// const saltRounds = 10
-// const jwt = require('jsonwebtoken')
-// const { isAuthenticated } = require('./../middleware/jwt.middleware')
-
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const salt = bcrypt.genSaltSync(10);
+const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
 router.get('', async (req, res) => {
   try {
-    const usersList = await User.find();
+    const usersList = await User.find()
     return res.status(200).json(usersList);
   } catch (error) {
     res.status(500).json(error);
@@ -18,63 +16,65 @@ router.get('', async (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  if (password.length < 2) {
-    return res.status(400).json({ message: "Password must have at least 3 characters" })
-  }
+  const { username, email, password } = req.body
+
   try {
-    await User
-      .findOne({ username })
-      .then((foundUser) => {
+    const existingUser = await User.findOne({ username })
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists." })
+    }
 
-        if (foundUser) {
-          res.status(400).json({ message: "User already exists." })
-          return
-        }
-        return User.create({ password, username })
-      })
-      .then((createdUser) => {
-        const { username, _id } = createdUser
-        const user = { username, _id }
+    if (password.length < 4) {
+      return res.status(400).json({ message: "Password must be at least 4 characters" })
+    }
 
-        res.status(201).json({ user })
-      })
-  }
-  catch (error) {
-    console.log(error)
-    res.status(500).json({ message: "Internal Server Error" })
+    const userData = await User.create({
+      username,
+      email,
+      password: bcrypt.hashSync(password, salt),
+    })
+    res.status(201).json(userData)
+  } catch (error) {
+    res.status(500).json({ mesagge: "Internal Server Error" })
   }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => {
 
-  const { username, password } = req.body;
+  const { username, password } = req.body
 
   if (username === '' || password === '') {
-    res.status(400).json({ message: "Username or password not present." });
-    return;
+    return res.status(400).json({ message: "Username or password not present." })
   }
 
-  try {
-    const user = await User.findOne({ username, password });
-    if (!user) {
-      res.status(401).json({
-        messaje: "Login not succesfull",
-        error: "User not found"
-      })
-    } else {
-      res.status(200).json({
-        messaje: "Login succesful",
-        user
-      })
-    }
-  } catch (error) {
-    res.status(400).json({
-      message: "An error ocurred",
-      error: error.mesagge
+  const user = User
+    .findOne({ username })
+    .then((foundUser) => {
+      if (!foundUser) {
+        return res.status(401).json({ message: "Login not succesful", error: "User not found" })
+      }
+
+      if (bcrypt.compareSync(password, foundUser.password)) {
+
+        const { _id, username, email } = foundUser;
+
+        const payload = { _id, username, email }
+
+        const authToken = jwt.sign(
+          payload,
+          'helloworld', //secret?
+          { algorithm: 'HS256', expiresIn: "6h" }
+        )
+        res.status(200).json({ authToken });
+      }
+      else {
+        res.status(401).json({ message: "Unable to authenticate the user" });
+      }
     })
-  }
-
+    .catch(error => {
+      console.log(error)
+      res.status(500).json({ message: "Internal Server Error" })
+    })
 });
 
 router.delete('/:user_id', async (req, res) => {
@@ -84,6 +84,10 @@ router.delete('/:user_id', async (req, res) => {
   } catch (error) {
     res.status(500).json(error)
   }
+})
+
+router.get('/verify', isAuthenticated, (req, res) => {
+  res.status(200).json(req.payload)
 })
 
 module.exports = router

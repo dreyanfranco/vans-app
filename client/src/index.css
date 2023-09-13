@@ -40,6 +40,17 @@ header .site-logo {
   font-size: 25px;
 }
 
+header .login-icon {
+    height: 18px;
+    width: 18px;
+    margin-right: 3px;
+}
+
+header .login-link {
+    display: inline-flex;
+    align-items: center;
+}
+
 header a {
   text-decoration: none;
   color: #4D4D4D;
