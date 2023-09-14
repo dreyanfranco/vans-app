@@ -13,8 +13,8 @@ import Income from './pages/Host/Income';
 import Reviews from './pages/Host/Reviews';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
-import VanDetail from './pages/VanDetail/VanDetail';
-import VanForm from './pages/VanForm/VanForm';
+import VanDetail from './pages/Vans/VanDetail/VanDetail';
+import VanForm from './pages/Vans/VanForm/VanForm';
 import Vans from './pages/Vans/Vans';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="signup" element={<Register />} />
           <Route path="vans" element={<Vans />} />
           <Route path="vans/:van_id" element={<VanDetail />} />
 

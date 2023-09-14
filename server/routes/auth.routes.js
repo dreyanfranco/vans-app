@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ message: "Username or password not present." })
   }
 
-  const user = User
+  User
     .findOne({ username })
     .then((foundUser) => {
       if (!foundUser) {

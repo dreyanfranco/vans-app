@@ -4,7 +4,7 @@ import avatar from '../../assets/avatar-icon.png';
 import { AuthContext } from '../../context/auth.context';
 
 const Header = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
 
     return (
         <header>
@@ -13,10 +13,19 @@ const Header = () => {
                 <NavLink to='/host' className={({ isActive }) => isActive ? "active-link" : null}>Host</NavLink>
                 <NavLink to='/about' className={({ isActive }) => isActive ? "active-link" : null}>About</NavLink>
                 <NavLink to='/vans' className={({ isActive }) => isActive ? "active-link" : null}>Vans</NavLink>
-                <Link to='/login' className="login-link">
-                    <img src={avatar} className='login-icon' />
-                    {user && <span>{user.username}</span>}
-                </Link>
+                {user ? (
+                    <div>
+                        <Link to='/host' className="login-link">
+                            <img src={avatar} className='login-icon' alt="User Avatar" />
+                            <span>{user.username}</span>
+                        </Link>
+                        <button className='link-button' onClick={logout}>Logout</button>
+                    </div>
+                ) : (
+                    <Link to='/login' className="login-link">
+                        <img src={avatar} className='login-icon' alt="Login" />
+                    </Link>
+                )}
             </nav>
         </header>
     )

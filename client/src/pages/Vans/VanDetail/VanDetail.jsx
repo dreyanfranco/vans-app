@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getOneVan } from '../../services/vans.service';
+import { getOneVan } from '../../../services/vans.service';
 import './styles.css';
 
 const VanDetail = () => {
@@ -12,8 +12,6 @@ const VanDetail = () => {
             .then(({ data }) => setVanData(data))
             .catch(error => console.log(error))
     }, [van_id])
-
-
 
     return (
         <div className='van-detail-container'>

@@ -51,7 +51,7 @@ const Login = () => {
                     value={loginData.password}
                 />
                 <button>Log in</button>
-                <p>Don't have an account? <Link to={'register'}>Register</Link> </p>
+                <p>Don't have an account? <Link to={'/signup'}>Signup</Link> </p>
             </form>
         </div>
     )

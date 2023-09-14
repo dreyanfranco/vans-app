@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { saveVan } from '../../services/vans.service'
+import { saveVan } from '../../../services/vans.service'
 
 const VanForm = () => {
     const [formData, setFormData] = useState({
@@ -20,16 +20,14 @@ const VanForm = () => {
 
     const handleForm = async (event) => {
         event.preventDefault()
-
         try {
             await saveVan(formData)
             navigate('/host')
         } catch (error) {
 
         }
-
-
     }
+
     return (
         <div className='login-container'>
             <h1>Your new van</h1>
