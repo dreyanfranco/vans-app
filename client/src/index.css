@@ -73,6 +73,9 @@ main {
   margin-bottom: 84px;
 }
 
+nav {
+  display: flex;
+}
 
 .link-button {
   display: inline-block;
