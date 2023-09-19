@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
 import authService from '../../services/auth.service'
 import './styles.css'
@@ -10,9 +10,23 @@ const Login = () => {
         username: '',
         password: ''
     })
-    const navigate = useNavigate();
+    const [messageVisible, setMessageVisible] = useState(true)
+    const { authenticateUser } = useContext(AuthContext)
 
-    const { authenticateUser, user } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const message = location.state && location.state.message
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setMessageVisible(false);
+        }, 5000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, []);
 
     const handleInputChange = e => {
         const { value, name } = e.target
@@ -35,6 +49,7 @@ const Login = () => {
     return (
         <div className='login-container'>
             <h1>Sign in to your account</h1>
+            {messageVisible && message && <p style={{ color: 'red' }}>{message}</p>}
             <form onSubmit={handleSubmit} className="login-form">
                 <input
                     type="text"
@@ -51,7 +66,7 @@ const Login = () => {
                     value={loginData.password}
                 />
                 <button>Log in</button>
-                <p>Don't have an account? <Link to={'/signup'}>Signup</Link> </p>
+                <p>Don't have an account? <Link className='link-button' to={'/signup'}>Signup</Link> </p>
             </form>
         </div>
     )

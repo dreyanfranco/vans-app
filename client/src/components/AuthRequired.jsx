@@ -10,7 +10,7 @@ const AuthRequired = () => {
     // }
 
     if (!user) {
-        return <Navigate to={'/login'} />
+        return <Navigate to={'/login'} state={{ message: "You must log in first" }} />
     }
     return (
         <Outlet />

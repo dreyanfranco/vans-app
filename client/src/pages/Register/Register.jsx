@@ -53,7 +53,7 @@ const Register = () => {
                     value={signupData.password}
                 />
                 <button>Signup</button>
-                <p>Already have an account? <Link to={'/login'}>Log in</Link> </p>
+                <p>Already have an account? <Link className='link-button' to={'/login'}>Log in</Link> </p>
             </form>
         </div>
     )
