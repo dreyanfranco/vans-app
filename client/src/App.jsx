@@ -12,10 +12,11 @@ import HostVans from './pages/Host/HostVans/HostVans';
 import Income from './pages/Host/Income';
 import Reviews from './pages/Host/Reviews';
 import Login from './pages/Login/Login';
+import NotFound from './pages/NotFound/NotFound';
 import Register from './pages/Register/Register';
 import VanDetail from './pages/Vans/VanDetail/VanDetail';
 import VanForm from './pages/Vans/VanForm/VanForm';
-import Vans from './pages/Vans/Vans';
+import VansList from './pages/Vans/VansList/VansList';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Register />} />
-          <Route path="vans" element={<Vans />} />
+          <Route path="vans" element={<VansList />} />
           <Route path="vans/:van_id" element={<VanDetail />} />
 
           <Route path="host" element={<HostLayout />} >
@@ -34,13 +35,14 @@ function App() {
             <Route path="income" element={<Income />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="vans" element={<HostVans />} />
+            <Route path="new-van" element={<VanForm />} />
             <Route path="vans/:van_id" element={<HostVanDetail />} >
               <Route index element={<HostVanInfo />} />
               <Route path='pricing' element={<HostVanPricing />} />
               <Route path='photos' element={<HostVanPhotos />} />
             </Route>
-            <Route path="new-van" element={<VanForm />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </>

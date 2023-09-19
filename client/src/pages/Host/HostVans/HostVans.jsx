@@ -29,7 +29,7 @@ const HostVans = () => {
                     <section>
                         {vanData.map(van => (
                             <Link
-                                to={`/host/vans/${van._id}`}
+                                to={van._id}
                                 key={van._id}
                                 className='host-van-link-wrapper'>
                                 <div className="host-van-single">

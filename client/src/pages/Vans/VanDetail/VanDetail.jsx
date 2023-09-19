@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getOneVan } from '../../../services/vans.service';
 import './styles.css';
 
 const VanDetail = () => {
     const [vanData, setVanData] = useState();
     const { van_id } = useParams();
+    const location = useLocation()
 
     useEffect(() => {
         getOneVan(van_id)
@@ -13,8 +14,14 @@ const VanDetail = () => {
             .catch(error => console.log(error))
     }, [van_id])
 
+    const search = location.state?.search || ''
+    const type = location.state?.type || 'all'
+
     return (
         <div className='van-detail-container'>
+            <Link to={`..${search}`} relative='path' className='back-button'>
+                &larr; <span>Back to {type} vans</span>
+            </Link>
             {vanData ? (
                 <div className='van-detail'>
 
